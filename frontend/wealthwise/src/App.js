@@ -1,9 +1,9 @@
 // added successfully
 import { Navigate, Route, Routes } from 'react-router-dom';
 import './App.css';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-import Home from './pages/Home';
+import Login from './pages/Login.jsx';
+import Signup from './pages/Signup.jsx';
+import Home from './pages/Home.jsx';
 import { useState } from 'react';
 import RefrshHandler from './RefrshHandler';
 

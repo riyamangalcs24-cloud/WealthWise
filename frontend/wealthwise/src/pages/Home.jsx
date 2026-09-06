@@ -1,7 +1,7 @@
 // added successfully
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { APIUrl, handleError, handleSuccess } from '../utils';
+import { APIUrl, handleError, handleSuccess } from './utils';
 import { ToastContainer } from 'react-toastify';
 import ExpenseTable from './ExpenseTable';
 import ExpenseDetails from './ExpenseDetails';
