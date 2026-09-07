@@ -1,1 +1,700 @@
-DECLARATION We, the undersigned members of Team Logic Legends — Riya Mangal, Dhruv Sharda, Tanu Mangal, Yatharth Dubey and Animesh Pandey — hereby declare that the project synopsis entitled "WealthWise: A Personal Finance Tracker" is an original record of our own work, carried out under the guidance of Mr. Akash Kumar Choudhary, Master Trainer, GLA University. This work has not been submitted elsewhere for the award of any other degree or diploma.ACKNOWLEDGEMENT We would like to express our sincere gratitude to Mr. Akash Kumar Choudhary, our Master Trainer, for his valuable guidance and constant encouragement throughout this project. We also thank the Department of Computer Science, GLA University, for providing the resources and support needed to carry out this project.CERTIFICATE This is to certify that the project entitled "WealthWise: A Personal Finance Tracker" has been carried out by Riya Mangal, Dhruv Sharda, Tanu Mangal, Yatharth Dubey and Animesh Pandey (Team Logic Legends) in partial fulfilment of their course requirements, under my supervision and guidance. Signature of Guide: Mr. Akash Kumar Choudhary Date: ____________Topic S.NO Introduction 1 SystemRequirements 2 HardwareRequirements 3 FrontEndandBackEnd 4 Idea 5 Objective 6 ModuleDescription 7 Availability 8 ER Diagram 9 BIBLIOGRAPHY 10 References 11 INDEX This Index is a reference for synopsis onlyINTRODUCTION: WealthWise is a full-stack personal finance management web application built on the MERN stack (MongoDB, Express.js, React.js and Node.js). Manual tracking of income and expenses through notebooks or spreadsheets is slow and error-prone, so WealthWise gives users one secure platform to record transactions, set savings goals, and understand their spending through visual dashboards. ABOUT THE PROJECT: • Built for individuals who want a simple, secure way to manage day-to-day income, expenses and savings. • Uses React.js for the interface, Node.js and Express.js for the REST API, and MongoDB for data storage. • Core features: secure authentication, transaction categorization, budget tracking and visual reports. • Developed following clean coding practices, modular REST API design, and Git/GitHub version control. • Designed to be extendable — future modules like bill reminders or bank-account sync can be added later.Primary Reason to Choose This Project • Personal finance management is a real, high-demand fintech problem with genuine practical value. • The project gives hands-on experience with the full MERN stack, from database to UI. • It builds practical skills in REST API design, authentication, and Git/GitHub workflows. • Data visualization adds a challenging and rewarding front-end component to the build. The MainObjective of the Project • Let users record and categorize income and expenses with ease. • Help users set, track and achieve personal savings goals. • Present spending patterns and financial health through charts and dashboards. • Provide secure authentication and safe storage of financial data. • Apply clean coding, REST API design and Git/GitHub practices throughout development.Scope Of the Project: • Income and expense tracking with custom categories (food, rent, travel, etc.). • Savings-goal creation with progress tracking. • Visual dashboards: monthly spend, category-wise breakdown and trends. • Secure registration and login using JWT-based authentication. • Future scope: multi-currency support, bank-account integration and tax reports. Working Methodology Of the Project: • Requirement analysis and design of the database schema and API endpoints. • UI/UX design of dashboards and forms using reusable React components. • Iterative, Agile-style development in short sprints with regular team reviews. • Backend built first with Node.js, Express and MongoDB, then connected to the React frontend via REST APIs. • Version control and collaboration through Git and GitHub using feature branches and pull requests. • API testing with Postman and manual UI testing before deployment.Details About the Hardware and the Software System Requirements:Supported Operating system: Software Required: HardwareRequirements: ListingOuttestingtechnology : Frontend and Backend:Frontend Backend Windows 10/11, macOS or Linux — any OS that runs a modern browser and Node.js. Node.js, npm, MongoDB (Community Server or Atlas), VS Code, Git, Postman . Minimum dual-core processor, 4 GB RAM, 500 MB storage, stable internet connection. Postman for API testing; Jest / React Testing Library for unit tests; manual UI testing React.js, React Router, Context API, Axios, Chart.js / Recharts, Tailwind CSS . Node.js, Express.js, MongoDB with Mongoose, JWT authentication, bcrypt password hashing .Module Description: • User Authentication — secure sign-up, login and JWT-based session management. • Income & Expense — add, edit, delete and categorize transactions. • Budget & Savings Goals — set monthly budgets and track goal progress. • Analytics & Reports — pie / bar / line charts summarizing spending and savings trends. • Profile & Settings — manage account details, categories and preferences. DataFlowDiagrams Availability & Expected Outcome Availability: WealthWise will be developed as a responsive web application accessible through modern web browsers. The frontend can be deployed on Vercel or Netlify, while the backend can be deployed on Render. MongoDB Atlas can be used for cloud database hosting. The source code will be maintained on GitHub for team collaboration and project evaluation. Expected Outcome: A functional MERN-based personal finance management application. Users will be able to securely register and log in. Users can add, edit, delete and categorize income and expense transactions. Users can set savings goals and track their financial progress. . Interactive dashboards and charts will provide insights into spending and saving patternsReferences: 1.MongoDB Documentation https://www.mongodb.com/docs/ 2.Express.js Documentation https://expressjs.com/ 3.React Documentation https://react.dev/ 4.Node.js Documentation https://nodejs.org/docs/ 5.Mongoose Documentation https://mongoosejs.com/docs/ 6.JSON Web Token (JWT) https://jwt.io/ 7.Chart.js Documentation https://www.chartjs.org/docs/ 8.Postman Documentation https://learning.postman.com/docs/
+# WealthWise: A Personal Finance Tracker
+
+---
+
+# DECLARATION
+
+We, the undersigned members of **Team Logic Legends** — Riya Mangal, Dhruv Sharda, Tanu Mangal, Yatharth Dubey and Animesh Pandey — hereby declare that the project synopsis entitled **"WealthWise: A Personal Finance Tracker"** is an original record of our own work, carried out under the guidance of **Mr. Akash Kumar Choudhary, Master Trainer, GLA University**.
+
+This work has not been submitted elsewhere for the award of any other degree or diploma.
+
+---
+
+# ACKNOWLEDGEMENT
+
+We would like to express our sincere gratitude to **Mr. Akash Kumar Choudhary**, our Master Trainer, for his valuable guidance and constant encouragement throughout this project.
+
+We also thank the **Department of Computer Science, GLA University**, for providing the resources and support needed to carry out this project.
+
+---
+
+# CERTIFICATE
+
+This is to certify that the project entitled **"WealthWise: A Personal Finance Tracker"** has been carried out by:
+
+- Riya Mangal
+- Dhruv Sharda
+- Tanu Mangal
+- Yatharth Dubey
+- Animesh Pandey
+
+under the supervision and guidance of **Mr. Akash Kumar Choudhary**.
+
+**Team:** Logic Legends
+
+**Signature of Guide:** Mr. Akash Kumar Choudhary
+
+**Date:** ______________
+
+---
+
+# TABLE OF CONTENTS
+
+| S.No. | Topic |
+|------:|-------|
+| 1 | Introduction |
+| 2 | System Requirements |
+| 3 | Hardware Requirements |
+| 4 | Frontend and Backend |
+| 5 | Idea |
+| 6 | Objective |
+| 7 | Module Description |
+| 8 | Availability |
+| 9 | ER Diagram |
+| 10 | Bibliography |
+| 11 | References |
+
+---
+
+# INDEX
+
+This index is a reference for the project synopsis only.
+
+---
+
+# INTRODUCTION
+
+**WealthWise** is a full-stack personal finance management web application built on the **MERN Stack**:
+
+- MongoDB
+- Express.js
+- React.js
+- Node.js
+
+Manual tracking of income and expenses through notebooks or spreadsheets is often slow and error-prone.
+
+WealthWise provides users with one secure platform to:
+
+- Record financial transactions
+- Track income and expenses
+- Set savings goals
+- Categorize transactions
+- Understand spending patterns
+- View financial information through visual dashboards
+
+---
+
+# ABOUT THE PROJECT
+
+- Built for individuals who want a simple and secure way to manage day-to-day income, expenses and savings.
+- Uses React.js for the user interface.
+- Uses Node.js and Express.js for the REST API.
+- Uses MongoDB for data storage.
+- Provides secure user authentication.
+- Supports transaction categorization.
+- Provides budget tracking and visual reports.
+- Developed following clean coding practices.
+- Uses modular REST API design.
+- Uses Git and GitHub for version control.
+- Designed to be extendable for future modules such as bill reminders and bank-account synchronization.
+
+---
+
+# PRIMARY REASON TO CHOOSE THIS PROJECT
+
+- Personal finance management is a real-world and high-demand fintech problem with genuine practical value.
+- The project provides hands-on experience with the complete MERN Stack, from database development to user interface development.
+- It builds practical skills in REST API design and authentication.
+- It provides experience with Git and GitHub workflows.
+- Data visualization adds an interactive and useful front-end component to the project.
+
+---
+
+# MAIN OBJECTIVE OF THE PROJECT
+
+The main objectives of WealthWise are:
+
+- To allow users to record and categorize income and expenses easily.
+- To help users set, track and achieve personal savings goals.
+- To present spending patterns and financial health through charts and dashboards.
+- To provide secure authentication and safe storage of financial data.
+- To apply clean coding practices and REST API design principles.
+- To use Git and GitHub for version control and project collaboration.
+
+---
+
+# SCOPE OF THE PROJECT
+
+The project includes the following features:
+
+- Income and expense tracking.
+- Custom transaction categories such as food, rent and travel.
+- Savings-goal creation.
+- Savings progress tracking.
+- Monthly spending analysis.
+- Category-wise expense breakdown.
+- Financial trends through dashboards and charts.
+- Secure registration and login using JWT-based authentication.
+
+## Future Scope
+
+Future versions of WealthWise may include:
+
+- Multi-currency support.
+- Bank-account integration.
+- Bill reminders.
+- Tax reports.
+- Advanced financial analytics.
+
+---
+
+# WORKING METHODOLOGY
+
+The project follows the following development methodology:
+
+1. Requirement analysis and project planning.
+2. Database schema design.
+3. REST API endpoint design.
+4. UI/UX design for dashboards and forms.
+5. Development of reusable React components.
+6. Backend development using Node.js, Express.js and MongoDB.
+7. Integration of the React frontend with backend REST APIs.
+8. Iterative Agile-style development using short development cycles.
+9. Regular team reviews and testing.
+10. Version control and collaboration using Git and GitHub.
+11. API testing using Postman.
+12. Manual user interface testing before deployment.
+
+---
+
+# SYSTEM REQUIREMENTS
+
+## Supported Operating System
+
+The application can run on:
+
+- Windows 10 or Windows 11
+- macOS
+- Linux
+
+Any operating system capable of running a modern web browser and Node.js can be used.
+
+---
+
+# SOFTWARE REQUIREMENTS
+
+The following software and technologies are required:
+
+- Node.js
+- npm
+- MongoDB
+- MongoDB Atlas
+- Visual Studio Code
+- Git
+- GitHub
+- Postman
+- Modern Web Browser
+
+---
+
+# HARDWARE REQUIREMENTS
+
+Minimum hardware requirements:
+
+- Dual-core processor
+- 4 GB RAM
+- Approximately 500 MB free storage
+- Stable internet connection
+
+---
+
+# TESTING TECHNOLOGIES
+
+The project can be tested using:
+
+- Postman for REST API testing.
+- Manual UI testing for frontend components.
+- Jest for unit testing.
+- React Testing Library for testing React components.
+
+---
+
+# FRONTEND AND BACKEND
+
+## Frontend
+
+The frontend is responsible for the user interface and user interaction.
+
+### Technologies Used
+
+- React.js
+- React Router
+- Context API
+- Axios
+- Chart.js or Recharts
+- Tailwind CSS
+
+---
+
+## Backend
+
+The backend is responsible for business logic, API development and database operations.
+
+### Technologies Used
+
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- JWT Authentication
+- bcrypt for password hashing
+
+---
+
+# MODULE DESCRIPTION
+
+## 1. User Authentication
+
+Provides secure:
+
+- User registration
+- User login
+- JWT-based authentication
+- Session management
+
+---
+
+## 2. Income and Expense Management
+
+Allows users to:
+
+- Add transactions
+- Edit transactions
+- Delete transactions
+- Categorize income and expenses
+
+---
+
+## 3. Budget and Savings Goals
+
+Allows users to:
+
+- Set monthly budgets
+- Create savings goals
+- Track financial progress
+
+---
+
+## 4. Profile and Settings
+
+Allows users to manage:
+
+- Account details
+- Transaction categories
+- User preferences
+
+---
+
+# DATA FLOW DIAGRAMS
+
+The Data Flow Diagram represents the movement of data between users, the frontend application, backend services and the database.
+
+The main flow is:
+
+```text
+User
+  ↓
+React Frontend
+  ↓
+REST API
+  ↓
+Node.js + Express.js Backend
+  ↓
+MongoDB Database
+# WealthWise: A Personal Finance Tracker
+
+---
+
+# DECLARATION
+
+We, the undersigned members of **Team Logic Legends** — Riya Mangal, Dhruv Sharda, Tanu Mangal, Yatharth Dubey and Animesh Pandey — hereby declare that the project synopsis entitled **"WealthWise: A Personal Finance Tracker"** is an original record of our own work, carried out under the guidance of **Mr. Akash Kumar Choudhary, Master Trainer, GLA University**.
+
+This work has not been submitted elsewhere for the award of any other degree or diploma.
+
+---
+
+# ACKNOWLEDGEMENT
+
+We would like to express our sincere gratitude to **Mr. Akash Kumar Choudhary**, our Master Trainer, for his valuable guidance and constant encouragement throughout this project.
+
+We also thank the **Department of Computer Science, GLA University**, for providing the resources and support needed to carry out this project.
+
+---
+
+# CERTIFICATE
+
+This is to certify that the project entitled **"WealthWise: A Personal Finance Tracker"** has been carried out by:
+
+- Riya Mangal
+- Dhruv Sharda
+- Tanu Mangal
+- Yatharth Dubey
+- Animesh Pandey
+
+under the supervision and guidance of **Mr. Akash Kumar Choudhary**.
+
+**Team:** Logic Legends
+
+**Signature of Guide:** Mr. Akash Kumar Choudhary
+
+**Date:** ______________
+
+---
+
+# TABLE OF CONTENTS
+
+| S.No. | Topic |
+|------:|-------|
+| 1 | Introduction |
+| 2 | System Requirements |
+| 3 | Hardware Requirements |
+| 4 | Frontend and Backend |
+| 5 | Idea |
+| 6 | Objective |
+| 7 | Module Description |
+| 8 | Availability |
+| 9 | ER Diagram |
+| 10 | Bibliography |
+| 11 | References |
+
+---
+
+# INDEX
+
+This index is a reference for the project synopsis only.
+
+---
+
+# INTRODUCTION
+
+**WealthWise** is a full-stack personal finance management web application built on the **MERN Stack**:
+
+- MongoDB
+- Express.js
+- React.js
+- Node.js
+
+Manual tracking of income and expenses through notebooks or spreadsheets is often slow and error-prone.
+
+WealthWise provides users with one secure platform to:
+
+- Record financial transactions
+- Track income and expenses
+- Set savings goals
+- Categorize transactions
+- Understand spending patterns
+- View financial information through visual dashboards
+
+---
+
+# ABOUT THE PROJECT
+
+- Built for individuals who want a simple and secure way to manage day-to-day income, expenses and savings.
+- Uses React.js for the user interface.
+- Uses Node.js and Express.js for the REST API.
+- Uses MongoDB for data storage.
+- Provides secure user authentication.
+- Supports transaction categorization.
+- Provides budget tracking and visual reports.
+- Developed following clean coding practices.
+- Uses modular REST API design.
+- Uses Git and GitHub for version control.
+- Designed to be extendable for future modules such as bill reminders and bank-account synchronization.
+
+---
+
+# PRIMARY REASON TO CHOOSE THIS PROJECT
+
+- Personal finance management is a real-world and high-demand fintech problem with genuine practical value.
+- The project provides hands-on experience with the complete MERN Stack, from database development to user interface development.
+- It builds practical skills in REST API design and authentication.
+- It provides experience with Git and GitHub workflows.
+- Data visualization adds an interactive and useful front-end component to the project.
+
+---
+
+# MAIN OBJECTIVE OF THE PROJECT
+
+The main objectives of WealthWise are:
+
+- To allow users to record and categorize income and expenses easily.
+- To help users set, track and achieve personal savings goals.
+- To present spending patterns and financial health through charts and dashboards.
+- To provide secure authentication and safe storage of financial data.
+- To apply clean coding practices and REST API design principles.
+- To use Git and GitHub for version control and project collaboration.
+
+---
+
+# SCOPE OF THE PROJECT
+
+The project includes the following features:
+
+- Income and expense tracking.
+- Custom transaction categories such as food, rent and travel.
+- Savings-goal creation.
+- Savings progress tracking.
+- Monthly spending analysis.
+- Category-wise expense breakdown.
+- Financial trends through dashboards and charts.
+- Secure registration and login using JWT-based authentication.
+
+## Future Scope
+
+Future versions of WealthWise may include:
+
+- Multi-currency support.
+- Bank-account integration.
+- Bill reminders.
+- Tax reports.
+- Advanced financial analytics.
+
+---
+
+# WORKING METHODOLOGY
+
+The project follows the following development methodology:
+
+1. Requirement analysis and project planning.
+2. Database schema design.
+3. REST API endpoint design.
+4. UI/UX design for dashboards and forms.
+5. Development of reusable React components.
+6. Backend development using Node.js, Express.js and MongoDB.
+7. Integration of the React frontend with backend REST APIs.
+8. Iterative Agile-style development using short development cycles.
+9. Regular team reviews and testing.
+10. Version control and collaboration using Git and GitHub.
+11. API testing using Postman.
+12. Manual user interface testing before deployment.
+
+---
+
+# SYSTEM REQUIREMENTS
+
+## Supported Operating System
+
+The application can run on:
+
+- Windows 10 or Windows 11
+- macOS
+- Linux
+
+Any operating system capable of running a modern web browser and Node.js can be used.
+
+---
+
+# SOFTWARE REQUIREMENTS
+
+The following software and technologies are required:
+
+- Node.js
+- npm
+- MongoDB
+- MongoDB Atlas
+- Visual Studio Code
+- Git
+- GitHub
+- Postman
+- Modern Web Browser
+
+---
+
+# HARDWARE REQUIREMENTS
+
+Minimum hardware requirements:
+
+- Dual-core processor
+- 4 GB RAM
+- Approximately 500 MB free storage
+- Stable internet connection
+
+---
+
+# TESTING TECHNOLOGIES
+
+The project can be tested using:
+
+- Postman for REST API testing.
+- Manual UI testing for frontend components.
+- Jest for unit testing.
+- React Testing Library for testing React components.
+
+---
+
+# FRONTEND AND BACKEND
+
+## Frontend
+
+The frontend is responsible for the user interface and user interaction.
+
+### Technologies Used
+
+- React.js
+- React Router
+- Context API
+- Axios
+- Chart.js or Recharts
+- Tailwind CSS
+
+---
+
+## Backend
+
+The backend is responsible for business logic, API development and database operations.
+
+### Technologies Used
+
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- JWT Authentication
+- bcrypt for password hashing
+
+---
+
+# MODULE DESCRIPTION
+
+## 1. User Authentication
+
+Provides secure:
+
+- User registration
+- User login
+- JWT-based authentication
+- Session management
+
+---
+
+## 2. Income and Expense Management
+
+Allows users to:
+
+- Add transactions
+- Edit transactions
+- Delete transactions
+- Categorize income and expenses
+
+---
+
+## 3. Budget and Savings Goals
+
+Allows users to:
+
+- Set monthly budgets
+- Create savings goals
+- Track financial progress
+
+---
+
+## 4. Analytics and Reports
+
+Provides visual insights through:
+
+- Pie charts
+- Bar charts
+- Line charts
+- Spending analysis
+- Savings trends
+
+---
+
+## 5. Profile and Settings
+
+Allows users to manage:
+
+- Account details
+- Transaction categories
+- User preferences
+
+---
+
+# DATA FLOW DIAGRAMS
+
+The Data Flow Diagram represents the movement of data between users, the frontend application, backend services and the database.
+
+The main flow is:
+
+```text
+User
+  ↓
+React Frontend
+  ↓
+REST API
+  ↓
+Node.js + Express.js Backend
+  ↓
+MongoDB Database
+
+# AVAILABILITY & EXPECTED OUTCOME
+
+## Availability
+
+WealthWise will be developed as a responsive web application accessible through modern web browsers.
+
+The application can be deployed using the following platforms:
+
+- **Frontend:** Vercel or Netlify
+- **Backend:** Render
+- **Database:** MongoDB Atlas
+- **Source Code & Version Control:** GitHub
+
+The source code will be maintained on GitHub for team collaboration and project evaluation.
+
+---
+
+## Expected Outcome
+
+The expected outcome of WealthWise is a functional **MERN-based personal finance management application**.
+
+Users will be able to:
+
+- Securely register and log in.
+- Add income and expense transactions.
+- Edit existing transactions.
+- Delete transactions.
+- Categorize income and expense transactions.
+- Set savings goals.
+- Track their financial progress.
+- Analyze spending and saving patterns.
+
+Interactive dashboards and charts will provide users with useful insights into their financial activities, spending habits, and savings progress.
+
+---
+
+# REFERENCES
+
+1. **MongoDB Documentation**  
+   https://www.mongodb.com/docs/
+
+2. **Express.js Documentation**  
+   https://expressjs.com/
+
+3. **React Documentation**  
+   https://react.dev/
+
+4. **Node.js Documentation**  
+   https://nodejs.org/docs/
+
+5. **Mongoose Documentation**  
+   https://mongoosejs.com/docs/
+
+6. **JSON Web Token (JWT)**  
+   https://jwt.io/
+
+7. **Chart.js Documentation**  
+   https://www.chartjs.org/docs/
+
+8. **Postman Documentation**  
+   https://learning.postman.com/docs/
