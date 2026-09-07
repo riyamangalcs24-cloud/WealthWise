@@ -286,19 +286,7 @@ Allows users to:
 
 ---
 
-## 4. Analytics and Reports
-
-Provides visual insights through:
-
-- Pie charts
-- Bar charts
-- Line charts
-- Spending analysis
-- Savings trends
-
----
-
-## 5. Profile and Settings
+## 4. Profile and Settings
 
 Allows users to manage:
 
