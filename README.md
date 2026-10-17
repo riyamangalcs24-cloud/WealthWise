@@ -4,7 +4,7 @@
 
 # DECLARATION
 
-We, the undersigned members of **Team Logic Legends** — Riya Mangal, Dhruv Sharda, Tanu Mangal, Yatharth Dubey and Animesh Pandey — hereby declare that the project synopsis entitled **"WealthWise: A Personal Finance Tracker"** is an original record of our own work, carried out under the guidance of **Mr. Akash Kumar Choudhary, Master Trainer, GLA University**.
+We, the undersigned members of **Team Logic Legends** Riya Mangal, Dhruv Sharda, Tanu Mangal, Yatharth Dubey and Animesh Pandey hereby declare that the project synopsis entitled **"WealthWise: A Personal Finance Tracker"** is an original record of our own work, carried out under the guidance of **Mr. Akash Kumar Choudhary, Master Trainer, GLA University**.
 
 This work has not been submitted elsewhere for the award of any other degree or diploma.
 
