@@ -1,239 +1,231 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
-import { APIUrl, handleError, handleSuccess } from './utils';
+import { ToastContainer, toast } from 'react-toastify';
+import { APIUrl, handleError, handleSuccess } from '../utils';
 import '../login.css';
 
-const FaSun = () => <span>☀️</span>;
-const FaMoon = () => <span>🌙</span>;
-const FaUserPlus = () => <span>＋</span>;
-
 function Signup() {
-    const [signupInfo, setSignupInfo] = useState({
-        name: '',
-        email: '',
-        password: ''
-    });
+  const navigate = useNavigate();
 
-    const [darkMode, setDarkMode] = useState(false);
-    const [shake, setShake] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
+  const [signupInfo, setSignupInfo] = useState({
+    name: '',
+    email: '',
+    password: ''
+  });
 
-    const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
 
-    useEffect(() => {
-        const prefersDark = window.matchMedia(
-            '(prefers-color-scheme: dark)'
-        ).matches;
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setSignupInfo((prev) => ({ ...prev, [name]: value }));
+  };
 
-        setDarkMode(prefersDark);
-    }, []);
+  const handleSignup = async (e) => {
+    e.preventDefault();
 
-    const toggleDarkMode = () => {
-        setDarkMode(prev => !prev);
-    };
+    if (!signupInfo.name || !signupInfo.email || !signupInfo.password) {
+      return handleError('Please fill all the fields');
+    }
 
-    const triggerShake = () => {
-        setShake(false);
+    try {
+      setIsLoading(true);
 
-        requestAnimationFrame(() => {
-            setShake(true);
-            setTimeout(() => setShake(false), 500);
-        });
-    };
+      const response = await fetch(`${APIUrl}/auth/signup`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(signupInfo)
+      });
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
+      const result = await response.json();
 
-        setSignupInfo(prev => ({
-            ...prev,
-            [name]: value
-        }));
-    };
+      if (!response.ok || result.success === false) {
+        handleError(result.message || 'Signup failed');
+        return;
+      }
 
-    const handleSignup = async (e) => {
-        e.preventDefault();
+      handleSuccess(result.message || 'Account created successfully!');
 
-        const { name, email, password } = signupInfo;
+      setTimeout(() => {
+        navigate('/login');
+      }, 1000);
 
-        if (!name || !email || !password) {
-            triggerShake();
-            return handleError('Name, email, and password are required');
-        }
+    } catch (error) {
+      handleError(error.message || 'Something went wrong');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-        setIsLoading(true);
+  return (
+    <div className={`login-page ${darkMode ? 'dark-mode' : ''}`}>
+      <div className="auth-shell">
 
-        try {
-            const url = `${APIUrl}/auth/signup`;
+        <section className="auth-form-panel">
+          <div className="ww-brand">
+            <div className="ww-logo">W</div>
+            <span className="brand-name">WealthWise</span>
+          </div>
 
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(signupInfo)
-            });
+          <button
+            className="theme-toggle"
+            type="button"
+            onClick={() => setDarkMode(!darkMode)}
+            aria-label="Toggle theme"
+          >
+            {darkMode ? '☀️' : '🌙'}
+          </button>
 
-            const result = await response.json();
-            const { success, message, error } = result;
+          <div className="auth-form-content">
+            <p className="eyebrow">GET STARTED</p>
 
-            if (success) {
-                handleSuccess(message || 'Signup successful');
+            <h1 className="auth-heading">Create your account</h1>
 
-                setTimeout(() => {
-                    navigate('/login');
-                }, 1000);
-            } else {
-                triggerShake();
+            <p className="auth-subheading">
+              Start your journey towards smarter money management.
+            </p>
 
-                const details =
-                    error?.details?.[0]?.message ||
-                    message ||
-                    'Signup failed';
+            <form className="login-form" onSubmit={handleSignup}>
+              <div className="form-group">
+                <label htmlFor="name">Full name</label>
+                <input
+                  id="name"
+                  className="form-input"
+                  type="text"
+                  name="name"
+                  placeholder="Enter your full name"
+                  value={signupInfo.name}
+                  onChange={handleChange}
+                  autoComplete="name"
+                  required
+                />
+              </div>
 
-                handleError(details);
-            }
-        } catch (err) {
-            console.error('Error during signup:', err);
-            triggerShake();
-            handleError('Something went wrong. Please try again.');
-        } finally {
-            setIsLoading(false);
-        }
-    };
+              <div className="form-group">
+                <label htmlFor="email">Email address</label>
+                <input
+                  id="email"
+                  className="form-input"
+                  type="email"
+                  name="email"
+                  placeholder="Enter your email"
+                  value={signupInfo.email}
+                  onChange={handleChange}
+                  autoComplete="email"
+                  required
+                />
+              </div>
 
-    return (
-        <div className={`login-page ${darkMode ? 'dark-theme' : 'light-theme'}`}>
-            <div className="login-background" />
+              <div className="form-group">
+                <label htmlFor="password">Password</label>
 
-            <button
-                type="button"
-                className="theme-toggle"
-                onClick={toggleDarkMode}
-                aria-label={`Switch to ${darkMode ? 'light' : 'dark'} mode`}
-            >
-                {darkMode ? <FaSun /> : <FaMoon />}
-            </button>
+                <div className="password-input-container">
+                  <input
+                    id="password"
+                    className="form-input"
+                    type={showPassword ? 'text' : 'password'}
+                    name="password"
+                    placeholder="Create a password"
+                    value={signupInfo.password}
+                    onChange={handleChange}
+                    autoComplete="new-password"
+                    required
+                  />
 
-            <main className={`auth-shell ${shake ? 'shake-animation' : ''}`}>
-                <section className="auth-form-panel">
-                    <Link to="/signup" className="ww-brand">
-                        <span className="ww-logo">₹</span>
-                        <span className="brand-name">
-                            Wealth<span>Wise</span>
-                        </span>
-                    </Link>
+                  <button
+                    type="button"
+                    className="password-toggle"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? 'Hide' : 'Show'}
+                  </button>
+                </div>
+              </div>
 
-                    <div className="auth-heading">
-                        <h1>Create Account</h1>
-                        <p>Start your journey towards smarter money habits.</p>
-                    </div>
+              <button
+                className="login-button"
+                type="submit"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <span className="spinner"></span>
+                ) : (
+                  'Create Account'
+                )}
+              </button>
+            </form>
 
-                    <form onSubmit={handleSignup} className="login-form">
-                        <div className="form-group">
-                            <label htmlFor="name">Full name</label>
-                            <input
-                                onChange={handleChange}
-                                value={signupInfo.name}
-                                type="text"
-                                name="name"
-                                id="name"
-                                className="form-input"
-                                placeholder="Enter your full name"
-                                autoComplete="name"
-                                required
-                            />
-                        </div>
+            <div className="auth-switch">
+              Already have an account?
+              <Link to="/login"> Login</Link>
+            </div>
+          </div>
 
-                        <div className="form-group">
-                            <label htmlFor="email">Email address</label>
-                            <input
-                                onChange={handleChange}
-                                value={signupInfo.email}
-                                type="email"
-                                name="email"
-                                id="email"
-                                className="form-input"
-                                placeholder="Enter your email"
-                                autoComplete="email"
-                                required
-                            />
-                        </div>
+          <p className="form-footer">
+            © 2026 WealthWise. All rights reserved.
+          </p>
+        </section>
 
-                        <div className="form-group">
-                            <label htmlFor="password">Create password</label>
-                            <input
-                                onChange={handleChange}
-                                value={signupInfo.password}
-                                type="password"
-                                name="password"
-                                id="password"
-                                className="form-input"
-                                placeholder="Create a password"
-                                autoComplete="new-password"
-                                required
-                            />
-                        </div>
+        <section className="auth-visual-panel">
+          <div className="visual-brand">
+            <span className="visual-brand-icon">W</span>
+            WealthWise
+          </div>
 
-                        <button
-                            type="submit"
-                            className="login-button"
-                            disabled={isLoading}
-                        >
-                            {isLoading ? (
-                                <>
-                                    <span className="spinner" />
-                                    <span>Creating account...</span>
-                                </>
-                            ) : (
-                                <>
-                                    <FaUserPlus />
-                                    <span>Create account</span>
-                                </>
-                            )}
-                        </button>
-                    </form>
+          <div className="visual-content">
+            <div className="money-art">
+              <div className="art-circle circle-one"></div>
+              <div className="art-circle circle-two"></div>
 
-                    <p className="auth-switch">
-                        Already have an account?{' '}
-                        <Link to="/login">Sign in</Link>
-                    </p>
-                </section>
+              <div className="art-card">
+                <span className="art-card-label">YOUR SAVINGS GOAL</span>
+                <h2>₹ 50,000</h2>
+                <div className="art-progress">
+                  <span></span>
+                </div>
+                <div className="art-card-bottom">
+                  <span>Goal progress</span>
+                  <span>75%</span>
+                </div>
+              </div>
 
-                <aside className="auth-visual-panel">
-                    <div className="visual-brand">
-                        <span className="ww-logo">₹</span>
-                        <span className="brand-name">
-                            Wealth<span>Wise</span>
-                        </span>
-                    </div>
+              <div className="art-floating-icon">₹</div>
+              <div className="art-chart">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
 
-                    <div className="money-art" aria-hidden="true">
-                        💸
-                    </div>
+            <div className="visual-copy">
+              <p className="visual-tagline">YOUR MONEY, YOUR FUTURE.</p>
+              <h2>Make every rupee count.</h2>
+              <p>
+                Set financial goals, monitor your spending
+                and take the first step towards financial freedom.
+              </p>
+            </div>
 
-                    <div className="visual-copy">
-                        <h2>
-                            Make every rupee <span>count.</span>
-                        </h2>
+            <div className="visual-dots">
+              <span></span>
+              <span className="active-dot"></span>
+              <span></span>
+            </div>
+          </div>
+        </section>
 
-                        <p>
-                            Organize your income, track spending, and
-                            take the next step toward your financial goals.
-                        </p>
-                    </div>
+      </div>
 
-                    <div className="visual-dots" aria-hidden="true">
-                        <span />
-                        <span />
-                        <span />
-                    </div>
-                </aside>
-            </main>
-
-            <ToastContainer theme={darkMode ? 'dark' : 'light'} />
-        </div>
-    );
+      <ToastContainer position="top-right" />
+    </div>
+  );
 }
 
 export default Signup;

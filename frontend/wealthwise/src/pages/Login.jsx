@@ -1,274 +1,240 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
-import { APIUrl, handleError, handleSuccess } from './utils';
+import { ToastContainer, toast } from 'react-toastify';
+import { APIUrl, handleError, handleSuccess } from '../utils';
 import '../login.css';
 
-const FaSun = () => <span>☀️</span>;
-const FaMoon = () => <span>🌙</span>;
-const FaEye = () => <span>👁</span>;
-const FaEyeSlash = () => <span>🙈</span>;
-const FaSignInAlt = () => <span>→</span>;
-
 function Login() {
-    const [loginInfo, setLoginInfo] = useState({
-        email: '',
-        password: ''
-    });
+  const navigate = useNavigate();
 
-    const [isLoading, setIsLoading] = useState(false);
-    const [showPassword, setShowPassword] = useState(false);
-    const [darkMode, setDarkMode] = useState(false);
-    const [shake, setShake] = useState(false);
+  const [loginInfo, setLoginInfo] = useState({
+    email: '',
+    password: ''
+  });
 
-    const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
 
-    useEffect(() => {
-        const prefersDark = window.matchMedia(
-            '(prefers-color-scheme: dark)'
-        ).matches;
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setLoginInfo((prev) => ({ ...prev, [name]: value }));
+  };
 
-        setDarkMode(prefersDark);
-    }, []);
+  const handleLogin = async (e) => {
+    e.preventDefault();
 
-    const toggleDarkMode = () => {
-        setDarkMode(prev => !prev);
-    };
+    if (!loginInfo.email || !loginInfo.password) {
+      return handleError('Please enter email and password');
+    }
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
+    try {
+      setIsLoading(true);
 
-        setLoginInfo(prev => ({
-            ...prev,
-            [name]: value
-        }));
-    };
+      const response = await fetch(`${APIUrl}/auth/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(loginInfo)
+      });
 
-    const togglePasswordVisibility = () => {
-        setShowPassword(prev => !prev);
-    };
+      const result = await response.json();
 
-    const triggerShake = () => {
-        setShake(false);
+      if (!response.ok || result.success === false) {
+        handleError(result.message || 'Login failed');
+        return;
+      }
 
-        requestAnimationFrame(() => {
-            setShake(true);
-            setTimeout(() => setShake(false), 500);
-        });
-    };
+      const token =
+        result.jwtToken ||
+        result.token ||
+        result.data?.token;
 
-    const handleLogin = async (e) => {
-        e.preventDefault();
+      const user =
+        result.name ||
+        result.user?.name ||
+        result.user?.email ||
+        loginInfo.email;
 
-        const { email, password } = loginInfo;
+      if (token) {
+        localStorage.setItem('token', token);
+      }
 
-        if (!email || !password) {
-            triggerShake();
-            return handleError('Email and password are required');
-        }
+      localStorage.setItem('loggedInUser', user);
 
-        setIsLoading(true);
+      handleSuccess(result.message || 'Login successful!');
 
-        try {
-            const url = `${APIUrl}/auth/login`;
+      setTimeout(() => {
+        navigate('/home');
+      }, 1000);
 
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(loginInfo)
-            });
+    } catch (error) {
+      handleError(error.message || 'Something went wrong');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-            const result = await response.json();
+  return (
+    <div className={`login-page ${darkMode ? 'dark-mode' : ''}`}>
+      <div className="auth-shell">
 
-            const { success, message, jwtToken, name, error } = result;
+        <section className="auth-form-panel">
+          <div className="ww-brand">
+            <div className="ww-logo">W</div>
+            <span className="brand-name">WealthWise</span>
+          </div>
 
-            if (success) {
-                handleSuccess(message || 'Login successful');
+          <button
+            className="theme-toggle"
+            type="button"
+            onClick={() => setDarkMode(!darkMode)}
+            aria-label="Toggle theme"
+          >
+            {darkMode ? '☀️' : '🌙'}
+          </button>
 
-                localStorage.setItem('token', jwtToken);
-                localStorage.setItem('loggedInUser', name);
+          <div className="auth-form-content">
+            <p className="eyebrow">WELCOME BACK</p>
 
-                setTimeout(() => {
-                    navigate('/home');
-                }, 1000);
-            } else {
-                triggerShake();
+            <h1 className="auth-heading">Login to your account</h1>
 
-                const details =
-                    error?.details?.[0]?.message ||
-                    message ||
-                    'Login failed';
+            <p className="auth-subheading">
+              Welcome back! Please enter your details.
+            </p>
 
-                handleError(details);
-            }
-        } catch (err) {
-            console.error('Error during login:', err);
-            triggerShake();
-            handleError('Something went wrong. Please try again.');
-        } finally {
-            setIsLoading(false);
-        }
-    };
+            <form className="login-form" onSubmit={handleLogin}>
+              <div className="form-group">
+                <label htmlFor="email">Email address</label>
+                <input
+                  id="email"
+                  className="form-input"
+                  type="email"
+                  name="email"
+                  placeholder="Enter your email"
+                  value={loginInfo.email}
+                  onChange={handleChange}
+                  autoComplete="email"
+                  required
+                />
+              </div>
 
-    return (
-        <div className={`login-page ${darkMode ? 'dark-theme' : 'light-theme'}`}>
-            <div className="login-background" />
+              <div className="form-group">
+                <label htmlFor="password">Password</label>
 
-            <button
-                type="button"
-                className="theme-toggle"
-                onClick={toggleDarkMode}
-                aria-label={`Switch to ${darkMode ? 'light' : 'dark'} mode`}
-            >
-                {darkMode ? <FaSun /> : <FaMoon />}
-            </button>
+                <div className="password-input-container">
+                  <input
+                    id="password"
+                    className="form-input"
+                    type={showPassword ? 'text' : 'password'}
+                    name="password"
+                    placeholder="Enter your password"
+                    value={loginInfo.password}
+                    onChange={handleChange}
+                    autoComplete="current-password"
+                    required
+                  />
 
-            <main className={`auth-shell ${shake ? 'shake-animation' : ''}`}>
-                <section className="auth-form-panel">
-                    <Link to="/login" className="ww-brand">
-                        <span className="ww-logo">₹</span>
-                        <span className="brand-name">
-                            Wealth<span>Wise</span>
-                        </span>
-                    </Link>
+                  <button
+                    type="button"
+                    className="password-toggle"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? 'Hide' : 'Show'}
+                  </button>
+                </div>
+              </div>
 
-                    <div className="auth-heading">
-                        <h1>Welcome Back!</h1>
-                        <p>Track your money with confidence.</p>
-                    </div>
+              <div className="form-options">
+                <label className="remember-me">
+                  <input type="checkbox" />
+                  <span>Remember me</span>
+                </label>
 
-                    <form onSubmit={handleLogin} className="login-form">
-                        <div className="form-group">
-                            <label htmlFor="email">Email address</label>
-                            <input
-                                onChange={handleChange}
-                                value={loginInfo.email}
-                                type="email"
-                                name="email"
-                                id="email"
-                                className="form-input"
-                                placeholder="Enter your email"
-                                autoComplete="username"
-                                required
-                            />
-                        </div>
+                <Link to="/forgot-password" className="forgot-password">
+                  Forgot password?
+                </Link>
+              </div>
 
-                        <div className="form-group">
-                            <label htmlFor="password">Password</label>
+              <button
+                className="login-button"
+                type="submit"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <span className="spinner"></span>
+                ) : (
+                  'Login'
+                )}
+              </button>
+            </form>
 
-                            <div className="password-input-container">
-                                <input
-                                    onChange={handleChange}
-                                    value={loginInfo.password}
-                                    type={showPassword ? 'text' : 'password'}
-                                    name="password"
-                                    id="password"
-                                    className="form-input"
-                                    placeholder="Enter your password"
-                                    autoComplete="current-password"
-                                    required
-                                />
+            <div className="auth-switch">
+              Don't have an account?
+              <Link to="/signup"> Sign up</Link>
+            </div>
+          </div>
 
-                                <button
-                                    type="button"
-                                    className="password-toggle"
-                                    onClick={togglePasswordVisibility}
-                                    aria-label={
-                                        showPassword
-                                            ? 'Hide password'
-                                            : 'Show password'
-                                    }
-                                >
-                                    {showPassword ? <FaEyeSlash /> : <FaEye />}
-                                </button>
-                            </div>
-                        </div>
+          <p className="form-footer">
+            © 2026 WealthWise. All rights reserved.
+          </p>
+        </section>
 
-                        <div className="form-options">
-                            <div className="remember-me">
-                                <input
-                                    type="checkbox"
-                                    id="remember"
-                                    name="remember"
-                                />
-                                <label htmlFor="remember">
-                                    Remember me
-                                </label>
-                            </div>
+        <section className="auth-visual-panel">
+          <div className="visual-brand">
+            <span className="visual-brand-icon">W</span>
+            WealthWise
+          </div>
 
-                            <Link
-                                to="/forgot-password"
-                                className="forgot-password"
-                            >
-                                Forgot password?
-                            </Link>
-                        </div>
+          <div className="visual-content">
+            <div className="money-art">
+              <div className="art-circle circle-one"></div>
+              <div className="art-circle circle-two"></div>
 
-                        <button
-                            type="submit"
-                            className="login-button"
-                            disabled={isLoading}
-                        >
-                            {isLoading ? (
-                                <>
-                                    <span className="spinner" />
-                                    <span>Signing in...</span>
-                                </>
-                            ) : (
-                                <>
-                                    <FaSignInAlt />
-                                    <span>Sign in</span>
-                                </>
-                            )}
-                        </button>
-                    </form>
+              <div className="art-card">
+                <span className="art-card-label">TOTAL BALANCE</span>
+                <h2>₹ 84,250.00</h2>
+                <div className="art-card-bottom">
+                  <span>••••  4285</span>
+                  <span>↗</span>
+                </div>
+              </div>
 
-                    <div className="auth-divider">
-                        <span>Manage your money smarter</span>
-                    </div>
+              <div className="art-floating-icon">₹</div>
+              <div className="art-chart">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
 
-                    <p className="auth-switch">
-                        Don't have an account?{' '}
-                        <Link to="/signup">Sign up</Link>
-                    </p>
-                </section>
+            <div className="visual-copy">
+              <p className="visual-tagline">SMART MONEY. BETTER LIFE.</p>
+              <h2>Take control of your money.</h2>
+              <p>
+                Track expenses, manage budgets and build better
+                financial habits — all in one place.
+              </p>
+            </div>
 
-                <aside className="auth-visual-panel">
-                    <div className="visual-brand">
-                        <span className="ww-logo">₹</span>
-                        <span className="brand-name">
-                            Wealth<span>Wise</span>
-                        </span>
-                    </div>
+            <div className="visual-dots">
+              <span className="active-dot"></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+        </section>
 
-                    <div className="money-art" aria-hidden="true">
-                        💸
-                    </div>
+      </div>
 
-                    <div className="visual-copy">
-                        <h2>
-                            Your money, <span>your control.</span>
-                        </h2>
-
-                        <p>
-                            Track expenses, manage budgets, and build
-                            better financial habits.
-                        </p>
-                    </div>
-
-                    <div className="visual-dots" aria-hidden="true">
-                        <span />
-                        <span />
-                        <span />
-                    </div>
-                </aside>
-            </main>
-
-            <ToastContainer theme={darkMode ? 'dark' : 'light'} />
-        </div>
-    );
+      <ToastContainer position="top-right" />
+    </div>
+  );
 }
 
 export default Login;

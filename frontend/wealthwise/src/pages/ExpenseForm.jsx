@@ -1,59 +1,93 @@
-import React, { useState } from 'react'
-import { handleError } from './utils';
+import React, { useState } from 'react';
 
 function ExpenseForm({ addTransaction }) {
-
     const [expenseInfo, setExpenseInfo] = useState({
+        text: '',
         amount: '',
-        text: ''
-    })
+        type: 'income'
+    });
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        const copyExpenseInfo = { ...expenseInfo };
-        copyExpenseInfo[name] = value;
-        setExpenseInfo(copyExpenseInfo);
-    }
 
-    const addExpenses = (e) => {
+        setExpenseInfo({
+            ...expenseInfo,
+            [name]: value
+        });
+    };
+
+    const handleSubmit = (e) => {
         e.preventDefault();
-        const { amount, text } = expenseInfo;
-        if (!amount || !text) {
-            handleError('Please add Expense Details');
+
+        if (!expenseInfo.text || !expenseInfo.amount) {
             return;
         }
-        addTransaction(expenseInfo);
-        setExpenseInfo({ amount: '', text: '' })
-    }
+
+        const amount = Number(expenseInfo.amount);
+
+        // Income positive, Expense negative
+        const finalAmount =
+            expenseInfo.type === 'income' ? amount : -amount;
+
+        addTransaction({
+            text: expenseInfo.text,
+            amount: finalAmount
+        });
+
+        setExpenseInfo({
+            text: '',
+            amount: '',
+            type: 'income'
+        });
+    };
 
     return (
-        <div className='container'>
-            <h1>Expense Tracker</h1>
-            <form onSubmit={addExpenses}>
-                <div>
-                    <label htmlFor='text'>Expense Detail</label>
-                    <input
-                        onChange={handleChange}
-                        type='text'
-                        name='text'
-                        placeholder='Enter your Expense Detail...'
-                        value={expenseInfo.text}
-                    />
-                </div>
-                <div>
-                    <label htmlFor='amount'>Amount</label>
-                    <input
-                        onChange={handleChange}
-                        type='number'
-                        name='amount'
-                        placeholder='Enter your Amount...'
-                        value={expenseInfo.amount}
-                    />
-                </div>
-                <button type='submit'>Add Expense</button>
-            </form>
-        </div>
-    )
+        <form onSubmit={handleSubmit}>
+            <h3>Transaction Details</h3>
+
+            <div>
+                <label>Transaction Type</label>
+                <select
+                    name="type"
+                    value={expenseInfo.type}
+                    onChange={handleChange}
+                >
+                    <option value="income">Income</option>
+                    <option value="expense">Expense</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Description</label>
+                <input
+                    type="text"
+                    name="text"
+                    placeholder="e.g. Shopping, Salary, Food"
+                    value={expenseInfo.text}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
+
+            <div>
+                <label>Amount (₹)</label>
+                <input
+                    type="number"
+                    name="amount"
+                    placeholder="Enter amount"
+                    min="0.01"
+                    step="0.01"
+                    value={expenseInfo.amount}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
+
+            <button type="submit">
+                + Add Transaction
+            </button>
+        </form>
+    );
 }
 
-export default ExpenseForm
+export default ExpenseForm;
