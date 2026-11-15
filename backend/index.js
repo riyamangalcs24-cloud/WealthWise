@@ -21,10 +21,10 @@ app.use('/auth', AuthRouter);
 app.use('/products', ProductRouter);
 app.use('/expenses', ensureAuthenticated, ExpenseRouter)
 
-const server = app.listen(8080, '127.0.0.1', () => {
-    console.log('BACKEND LIVE:', server.address());
-});
 
+const server = app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Backend running on port ${PORT}`);
+});
 server.on('error', (err) => {
     console.log('SERVER ERROR:', err);
 });
