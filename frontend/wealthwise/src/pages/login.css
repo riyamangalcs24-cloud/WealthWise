@@ -31,8 +31,6 @@
   box-shadow: 0 25px 80px rgba(21, 65, 55, 0.13);
 }
 
-/* LEFT FORM PANEL */
-
 .auth-form-panel {
   position: relative;
   padding: 38px 65px 25px;
@@ -114,8 +112,6 @@
   font-size: 13px;
   line-height: 1.7;
 }
-
-/* FORM */
 
 .login-form {
   display: flex;
@@ -272,8 +268,6 @@
   color: #a4b0aa;
   font-size: 10px;
 }
-
-/* RIGHT VISUAL PANEL */
 
 .auth-visual-panel {
   position: relative;
@@ -506,8 +500,6 @@
   background: #c7f36b;
 }
 
-/* DARK MODE */
-
 .dark-mode {
   background: #101d1a;
 }
@@ -553,8 +545,6 @@
 .dark-mode .remember-me {
   color: #bdcfc3;
 }
-
-/* RESPONSIVE */
 
 @media (max-width: 900px) {
   .login-page {
@@ -622,4 +612,28 @@
   .dark-mode {
     background: #1b2b26;
   }
+}
+
+.money-art {
+  animation: slideIn 0.8s ease-in-out;
+}
+
+.visual-copy {
+  animation: slideIn 0.8s ease-in-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.visual-dots button {
+  transition: all 0.4s ease;
 }
